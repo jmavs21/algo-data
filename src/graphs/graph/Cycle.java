@@ -15,6 +15,10 @@ import fundamentals.Stack;
  * Operations:
  *     hasCycle: O(1)
  *     cycle: O(length of cycle)
+ *     
+ * Note: for every v, if adjacent w is already visited and w is not parent (u) -> v, then is a cycle in graph.
+ * If      w == u --> means w came from his parent u -> v, so v -> w are connected so is ok.
+ * else if w != u --> means w came from different parent u -> z, so cycle v -> w -> z -> v 
  */
 public class Cycle 
 {
