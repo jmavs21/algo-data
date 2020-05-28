@@ -26,7 +26,7 @@ public class RandomN
 	}
 
 	public static double getRandomDouble() {
-		return random.nextDouble();
+		return random.nextDouble(); // (int)(Math.random()*(max+1-min)+min)
 	}
 	
 	public static int getRandomInt(int n) {

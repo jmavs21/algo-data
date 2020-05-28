@@ -87,27 +87,32 @@ public class MergeSort
 
 	// merge sort iterative
 	public static <T> void sortIterative(T[] a, T[] tmp, Comparator<T> comparator) { // bottom-up mergesort
-		for(int sz = 1; sz < a.length; sz = sz+sz) {
-			for(int low = 0; low < a.length-sz; low += sz+sz) { // since each time double, then you are doing (log n) time.
-				merge(a, tmp, comparator, low, low+sz-1, Math.min(low+sz+sz-1, a.length-1)); // called (log n) times, but merge doing (n) time, so (n log n) is the final time.
+		int n = a.length;
+		for(int len = 1; len < n; len = len+len) {
+			for(int lo = 0; lo < n-len; lo += len+len) { // since each time double, then you are doing (log n) time.
+				int mid = lo+len-1;
+				int hi = Math.min(lo+len+len-1, n-1);
+				System.out.println("lo="+lo + ", mid="+mid + ", hi="+hi);
+				merge(a, tmp, comparator, lo, mid, hi); // called (log n) times, but merge doing (n) time, so (n log n) is the final time.
 			}
 		}
 	}
-
+	
 	// TESTS ========================================================
 	public static void main(String[] args) {
 		int[] arr = { 4, 8, 1, 0, 3, 4, 9, 2 };
 		sort(arr);
 		System.out.println(Arrays.toString(arr));
 
-		int size = 100; // 10 million, 10_000_000
+		int size = 10; // 10 million, 10_000_000
 		Integer[] test = new Integer[size];
 		System.out.println(Arrays.toString(test));
 		for(int i = 0; i < test.length; i++) {
 			test[i] = RandomN.getRandomInt(0, size);
 		}
 		Instant start = Instant.now();
-		sort(test, new Integer[test.length], Integer::compareTo, 0, test.length - 1);
+		// sort(test, new Integer[test.length], Integer::compareTo, 0, test.length - 1);
+		sortIterative(test, new Integer[test.length], Integer::compareTo);
 		System.out.println(Arrays.toString(test));
 		Instant end = Instant.now();
 		System.out.println("Duration = " + Duration.between(start, end).getSeconds());
@@ -118,7 +123,6 @@ public class MergeSort
 		int[] test2 = new int[] {4, 8, 1, 0, 3, 4, 9, 2 };
 		System.out.println(Arrays.toString(test2));
 		sort(test2);
-		//		sortIterative(test2, new Integer[test2.length], Integer::compareTo);
 		System.out.println(Arrays.toString(test2));
 
 		System.out.println();

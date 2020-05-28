@@ -24,6 +24,27 @@ public class TestPermComp {
 			swap(a, pos, i);
 		}
 	}
+	// T = O(N!*N), S = O(N!*N)
+    private List<List<Integer>> usingBfs(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<List<Integer>> perms = new ArrayList<>();
+        perms.add(new ArrayList<>());
+        for (int num : nums) {
+            int size = perms.size();
+            for (int i = 0; i < size; i++) {
+                List<Integer> oldPerm = perms.get(i);
+                for(int j = 0; j <= oldPerm.size(); j++) {
+                    List<Integer> newPerm = new ArrayList<>(oldPerm);
+                    newPerm.add(j, num);
+                    if (newPerm.size() == nums.length)
+                        res.add(newPerm);
+                    else 
+                        perms.add(newPerm);
+                }
+            }
+        }
+        return res;
+    }
 	
 	/**
 	 * N, K Permutation: n!/(n-k)!
@@ -111,6 +132,27 @@ public class TestPermComp {
 		for(char c : letters.toCharArray()) {
 			backtrack(sb.append(c), digits, pos + 1);
 			sb.setLength(sb.length() - 1);
+		}
+	}
+
+	// Factor Combinations: T = O(nlog(n)), S = O(log(n))
+	public List<List<Integer>> getFactors(int n) {
+		List<List<Integer>> res = new ArrayList<>();
+		dfs(n, 2, new ArrayList<>(), res);
+		return res;
+	}
+	private void dfs(int n, int i, List<Integer> list, List<List<Integer>> res) {
+		if(n == 1) {
+			if(list.size() > 1)
+				res.add(new ArrayList<>(list));
+			return;
+		}
+		for(int j = i; j <= n; j++) {
+			if(n%j == 0) {
+				list.add(j);
+				dfs(n/j, j, list, res);
+				list.remove(list.size()-1);
+			}
 		}
 	}
 	
