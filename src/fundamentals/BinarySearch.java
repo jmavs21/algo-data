@@ -17,7 +17,7 @@ import java.util.Arrays;
  *    mid = 3                     l m h
  *                                a[3]==4
  *  Operations: where n is the number of elements in array.
- *      binarySearch, binarySearchRecur: O(log n) in the worst case.
+ *      binarySearch, binarySearchRecur: O(log(N) in the worst case.
  */
 public class BinarySearch {
   private BinarySearch() {}
@@ -46,6 +46,36 @@ public class BinarySearch {
       else return mid;
     }
     return -(lo + 1);
+  }
+
+  // the smallest element in a sorted array greater than the target element
+  private static int next(int[] a, int k) {
+    int lo = 0, hi = a.length - 1, res = -1;
+    while (lo <= hi) {
+      int mid = lo + (hi - lo) / 2;
+      if (a[mid] > k) {
+        res = mid;
+        hi = mid - 1;
+      } else {
+        lo = mid + 1;
+      }
+    }
+    return res;
+  }
+
+  // the largest element in a sorted array lesser than the target element
+  private static int prev(int[] a, int k) {
+    int lo = 0, hi = a.length - 1, res = -1;
+    while (lo <= hi) {
+      int mid = lo + (hi - lo) / 2;
+      if (a[mid] < k) {
+        res = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+    return res;
   }
 
   // TESTS ========================================================
